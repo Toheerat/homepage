@@ -5,6 +5,24 @@ st.markdown("""This free online tool provides guidance and resources to help you
 st.button("Assess your AI readiness in 5 minutes")
 
 # Import libraries
+# Context for each question
+context = [
+    "CONTEXT: We are interested in understanding the level of alignment within your organization towards adopting AI solutions. This question assesses whether there is a clear vision and support from leadership to implement AI initiatives and the overall drive within the organization to embrace AI technologies.",
+    "CONTEXT: This question aims to gauge your organization's current readiness to explore AI-related initiatives. We want to know how open and prepared your organization is to venture into AI-driven projects.",
+    "CONTEXT: Understanding the quality and state of your organizational data and content is crucial for assessing AI readiness. This question helps us identify the existing condition of your data and content, which is essential for successful AI implementation.",
+    "CONTEXT: We are interested in understanding your organization's level of AI maturity. This question assesses the extent to which your organization has already adopted and integrated AI technologies into its operations.",
+    "CONTEXT: Identifying your organization's initial AI initiative allows us to gain insights into the specific AI projects you are considering or have already implemented.",
+    "CONTEXT: This question aims to evaluate the level of AI adoption within your organization. We want to know to what extent AI technologies have been integrated into various aspects of your company's operations.",
+    "CONTEXT: Understanding your organization's AI readiness level helps us assess how prepared you are to embrace and implement AI solutions.",
+    "CONTEXT: This question aims to identify the areas where your organization excels in adopting AI technologies and where there may be room for improvement.",
+    "CONTEXT: Assessing your organization's readiness to implement an AI project is crucial for understanding the feasibility and potential success of AI initiatives.",
+    "CONTEXT: We are interested in understanding the specific outcomes your organization aims to achieve with the implementation of AI initiatives.",
+    "CONTEXT: This question aims to identify the potential benefits your organization envisions from successfully adopting AI technologies.",
+    "CONTEXT: Understanding the ethical implications of AI adoption helps us assess your organization's consideration of ethical concerns in the implementation of AI technologies.",
+    "CONTEXT: This question focuses on identifying the primary concerns your organization has regarding data management strategies to ensure data security and shareability.",
+    "CONTEXT: This question aims to understand your organization's understanding and consideration of various aspects that contribute to AI readiness, such as strategy, people and processes, data, technology and platforms, and ethical implications."
+]
+
 # Title
 st.title("AI and Machine Learning Readiness Quiz")
 
@@ -156,59 +174,38 @@ questions = [
 user_answers = {}
 
 # Display questions and collect user answers
-for question in questions:
-    st.subheader(question["question"])
+for index, question in enumerate(questions):
+    st.subheader(f"{question['question']}\n{context[index]}")
     key = question["question"]  # Use the question as the key
     selected_option = st.radio(key, options=question["options"])
     user_answers[question["question"]] = selected_option
 
 st.subheader("Thank you for answering the questions!")
 
-# Display recommendations based on user answers
-if st.button("Show Recommendations"):
-    st.subheader("Recommendations:")
-    for question in questions:
-        recommendation = ""  # Placeholder for recommendation
-        if question["question"] in user_answers:
-            selected_option = user_answers[question["question"]]
-            # Add conditions to match user answers and display recommendations accordingly
-            if question["question"] == "1. Does your organisation have the vision, support, and drive to enable successful AI solutions?":
-                if selected_option in ["Strongly disagree", "Disagree", "Somewhat disagree"]:
-                    recommendation = "Focus on building a strong AI vision and gaining leadership support. Educate the leadership team on the potential benefits of AI and how it can help the organisation achieve its business objectives."
-            elif question["question"] == "2. Is your organisation ready to consider AI-related initiatives?":
-                if selected_option in ["Not at all ready", "Not very ready"]:
-                    recommendation = "Focus on building awareness and understanding of AI and its potential benefits. Organise training sessions and workshops for employees and stakeholders."
-            elif question["question"] == "3. What is the state of your organisational data and content?":
-                if selected_option in ["Poor", "Fair"]:
-                    recommendation = "Focus on improving data management strategies and processes. Invest in data quality tools and technologies, and establish clear data governance policies."
-            elif question["question"] == "4. What is your organisation's AI maturity level?":
-                if selected_option in ["Novice", "Intermediate"]:
-                    recommendation = "Focus on building AI capabilities and expertise. Invest in AI training and education programs for employees and hire AI experts."
-            elif question["question"] == "5. What is your organisation's first AI initiative?":
-                recommendation = "Evaluate the potential impact of the first AI initiative on the business and ensure it aligns with the overall AI strategy. Ensure the necessary resources and expertise are available to implement the initiative successfully."
-            elif question["question"] == "6. How well adopted is AI-tech within your company?":
-                if selected_option in ["Not very adopted", "Somewhat adopted"]:
-                    recommendation = "Focus on building awareness and understanding of AI and its potential benefits. Organise training sessions and workshops for employees and stakeholders."
-            elif question["question"] == "7. What is your organisation's AI readiness level?":
-                recommendation = "Evaluate the AI readiness level and identify areas for improvement. Conduct an AI readiness assessment and develop an AI roadmap that outlines the necessary steps to achieve AI goals."
-            elif question["question"] == "8. What are your organisation's strengths and weaknesses in terms of AI adoption?":
-                recommendation = "Leverage strengths to build AI capabilities and address weaknesses. Invest in AI training and education programs for employees and hire AI experts."
-            elif question["question"] == "9. What is your organisation's readiness to implement an AI project?":
-                recommendation = "Evaluate readiness to implement an AI project and identify potential barriers to success. Conduct an AI readiness assessment and develop an AI roadmap that outlines the necessary steps to achieve AI goals."
-            elif question["question"] == "10. What are the success criteria for your target AI initiatives?":
-                recommendation = "Define the success criteria for AI initiatives and measure their impact on the business. Establish clear KPIs and metrics that align with the organisation's overall AI strategy."
-            elif question["question"] == "11. What are the potential business values that could be realised once the target state is achieved?":
-                recommendation = "Identify the potential benefits of AI adoption and prioritise initiatives accordingly. Conduct a cost-benefit analysis and evaluate the potential ROI of each AI initiative."
-            elif question["question"] == "12. What are the ethical implications of AI adoption in your organisation?":
-                recommendation = "Be aware of the ethical implications of AI adoption and develop clear policies and guidelines to address them. Establish an AI ethics committee and conduct regular audits of AI systems to ensure compliance with ethical standards."
-            elif question["question"] == "13. What are the key concerns related to data management strategies that make information secure and shareable?":
-                recommendation = "Focus on improving data management strategies and processes to ensure information is secure and shareable. Invest in data quality tools and technologies, and establish clear data governance policies."
-            elif question["question"] == "14. What are the distinct but interdependent areas in which to assess AI readiness, including strategy, people and processes, data, technology and platforms, and ethical implications?":
-                recommendation = "Evaluate each of these areas to assess AI readiness and develop an effective AI strategy. Conduct an AI readiness assessment and develop an AI roadmap that outlines the necessary steps to achieve AI goals."
-            
-            # Display the recommendation if it exists
-            if recommendation:
-                st.markdown(f"- {recommendation}")
+
+
+def show_recommendations():
+    st.subheader("Data:")
+    st.write("1. If the answer to 'What is the state of your organisational data and content?' is poor or fair, the organisation should focus on improving its data management strategies and processes. This can be done by investing in data quality tools and technologies and establishing clear data governance policies.")
+    st.write("2. If there are key concerns related to data management strategies that make information secure and shareable, the organisation should prioritize data security and privacy. This can be achieved by implementing robust data security measures and ensuring compliance with data protection regulations.")
+    
+    st.subheader("Technical Infrastructure:")
+    st.write("3. If the answer to 'Does your organisation have the vision, support, and drive to enable successful AI solutions?' is negative, the organisation should focus on building a strong AI vision and gaining leadership support. This can be done by educating the leadership team on the potential benefits of AI and how it can help the organisation achieve its business objectives.")
+    st.write("4. If the answer to 'Is your organisation ready to consider AI-related initiatives?' is negative, the organisation should focus on building awareness and understanding of AI and its potential benefits. This can be done by organising training sessions and workshops for employees and stakeholders.")
+    
+    st.subheader("Talent and Skills:")
+    st.write("5. If the answer to 'What is your organisation's AI maturity level?' is novice or intermediate, the organisation should focus on building its AI capabilities and expertise. This can be done by investing in AI training and education programs for employees and hiring AI experts.")
+    
+    st.subheader("Problem-Solving:")
+    st.write("6. If the answer to 'What is your organisation's first AI initiative?' is any specific AI initiative, the organisation should evaluate the potential impact of the initiative on the business and ensure that it aligns with its overall AI strategy. The organisation should also ensure that it has the necessary resources and expertise to implement the initiative successfully.")
+    st.write("7. If the answer to 'What are the success criteria for your target AI initiatives?' is any specific criteria, the organisation should define the success criteria for its AI initiatives and measure their impact on the business. This can be done by establishing clear KPIs and metrics that align with the organisation's overall AI strategy.")
+    st.write("8. If the answer to 'What are the potential business values that could be realized once the target state is achieved?' is any specific values, the organisation should identify the potential benefits of AI adoption and prioritize its initiatives accordingly. This can be done by conducting a cost-benefit analysis and evaluating the potential ROI of each AI initiative.")
+    st.write("9. If the answer to 'What are the ethical implications of AI adoption in your organisation?' is any specific implications, the organisation should be aware of the ethical implications of AI adoption and develop clear policies and guidelines to address them. This can be done by establishing an AI ethics committee and conducting regular audits of AI systems to ensure compliance with ethical standards.")
+
+
+st.write("Click the button below to show the recommendations:")
+if st.button("SHOW RECOMMENDATION"):
+    show_recommendations()
 
 
 st.header('Learn More Resources')
@@ -266,7 +263,17 @@ faq_data = {
     "How can the AI readiness checklist benefit my organization?": "The AI readiness checklist is a valuable resource to avoid AI pitfalls and ensure optimal AI utilization. It provides key questions that you and your stakeholders should be asking with every AI use case, helping you navigate through the complexities of AI adoption and engage stakeholders effectively.",
     "What are some organizational AI readiness factors?": "Organizational AI readiness factors are crucial for making purposeful decisions in the AI journey. While the search results did not provide specific factors, the study mentioned in the search results aims to conceptualize relevant factors that contribute to organizational AI readiness.",
     "How can I assess my organization's AI readiness level?": "Assessing your organization's AI readiness level involves considering factors such as your company's goals with AI, growth strategy, and competitive advantage. By evaluating these elements, you can determine your organization's readiness to embrace AI and identify areas for improvement.",
-    "What is an AI Readiness Workshop?": "An AI Readiness Workshop offered by Google Cloud Consulting is a two- to three-week engagement designed to accelerate value realization from your AI efforts. It helps you understand your business objectives, benchmark your AI capabilities, and provides tailored recommendations and a roadmap for AI adoption."
+    "What is an AI Readiness Workshop?": "An AI Readiness Workshop offered by Google Cloud Consulting is a two- to three-week engagement designed to accelerate value realization from your AI efforts. It helps you understand your business objectives, benchmark your AI capabilities, and provides tailored recommendations and a roadmap for AI adoption.",
+    "What is autonomous machine learning?": "Autonomous machine learning refers to the use of automated processes and algorithms that enable machines or systems to independently perform the entire process of learning from data, model building, and making decisions or predictions without human intervention.",
+    "How can autonomous machine learning be beneficial for a business?": "Autonomous machine learning can be beneficial for a business in several ways:\n- It reduces the need for human intervention, saving time and resources.\n- It can process large volumes of data quickly and efficiently.\n- It improves decision-making by leveraging real-time data and insights.\n- It allows businesses to scale and adapt to changing conditions more effectively.",
+    "Can you provide an example of how a business might adopt autonomous machine learning decisions?": "A business could use autonomous machine learning to automate customer support through chatbots. The chatbot could use natural language processing to understand customer inquiries, learn from past interactions, and autonomously provide appropriate responses or escalate issues to human agents when necessary.",
+    "What types of businesses or industries can benefit the most from adopting autonomous machine learning?": "Industries dealing with vast amounts of data and complex decision-making can benefit the most, including finance, healthcare, manufacturing, logistics, e-commerce, and marketing.",
+    "What are some key factors to consider when implementing autonomous machine learning into a business model?": "- Data quality and availability: Ensure that the data used for training and decision-making is accurate and sufficient.\n- Transparency and explainability: Understand how the autonomous system makes decisions and be able to explain its outputs.\n- Monitoring and auditing: Continuously monitor the system's performance and audit its decisions to detect and correct biases or errors.\n- Human oversight: Have a process in place to intervene or override the autonomous system if needed.",
+    "How can autonomous machine learning improve decision-making processes in a business?": "Autonomous machine learning can improve decision-making by:\n- Analyzing large datasets quickly and accurately.\n- Identifying patterns, trends, and insights that humans might miss.\n- Providing real-time recommendations based on the latest data.\n- Reducing human biases and errors in decision-making.",
+    "What are some potential challenges or risks that a business might face when adopting autonomous machine learning?": "- Data privacy and security concerns.\n- Lack of transparency and interpretability in the decision-making process.\n- Overreliance on autonomous systems without human oversight.\n- Ethical considerations regarding the impact of decisions made by machines.",
+    "What steps can a business take to ensure the successful adoption of autonomous machine learning?": "- Start with a well-defined use case and a clear problem statement.\n- Invest in high-quality data collection and preparation.\n- Collaborate with data scientists and domain experts to build robust models.\n- Implement a gradual rollout to test and validate the system's performance.\n- Continuously monitor and update the system as needed.",
+    "Can you explain the concept of a machine learning model and how it fits into an autonomous system?": "A machine learning model is a mathematical algorithm that learns patterns and relationships from data. In an autonomous system, the machine learning model is a crucial component responsible for processing data, making predictions, and providing decisions or actions without requiring human intervention.",
+    "How can a business measure the success or effectiveness of its autonomous machine learning adoption?": "The success of autonomous machine learning adoption can be measured through various metrics, such as:\n- Accuracy and performance of the autonomous system compared to human decisions or alternative approaches.\n- Efficiency gains in terms of time and cost savings.\n- Reduction in errors"
 }
 
 # Function to respond to user input
@@ -306,6 +313,22 @@ uk_benchmarks = {
 # Title and description
 st.title("AI Adoption Benchmarking")
 st.write("Compare your AI adoption progress against industry benchmarks in the UK.")
+
+
+st.header('Technology Readiness Level (TRL): Assessing Technology and System Maturity')
+st.write("Technology Readiness Level (TRL) is a common scale used to assess the maturity of a technology or system. The higher the TRL level, the more advanced and mature the technology is in its development and implementation.")
+
+
+st.write("TRL 1 - Basic principles observed and reported: Your organization is in the initial stages of understanding and observing AI principles and concepts.")
+st.write("TRL 2 - Technology concept and/or application formulated: Your organization has formulated a general idea of how AI can be applied in your business, but it is still at the conceptual stage.")
+st.write("TRL 3 - Analytical and experimental critical function and/or characteristic proof of concept: Your organization has conducted some initial experiments and analysis to prove the concept of AI application, but it is not yet at a practical implementation stage.")
+st.write("TRL 4 - Component and/or breadboard validation in a laboratory environment: Your organization has validated some AI components or modules in a controlled laboratory environment, but it has not been tested in real-world conditions.")
+st.write("TRL 5 - Technology validated in a relevant environment: Your organization has validated the AI technology in an environment that closely simulates real-world conditions relevant to your business needs.")
+st.write("TRL 6 - Technology demonstrated in a relevant environment: Your organization has demonstrated the AI technology in an environment that closely represents your actual business setting.")
+st.write("TRL 7 - System prototype demonstration in an operational environment: Your organization has developed a prototype of the AI system and demonstrated its functionality in an operational environment.")
+st.write("TRL 8 - System complete and approved: Your organization has completed the AI system development, and it has been approved for implementation within your business operations.")
+st.write("TRL 9 - Actual system proven in its operational environment: The AI system has been fully implemented and proven to be effective and efficient in your business operations. It has been used extensively in your business processes and has undergone competitive manufacturing or real-world application.")
+
 
 # User input for readiness score
 user_readiness_score = st.number_input("Enter your readiness score", min_value=0, max_value=10, step=1)
@@ -349,69 +372,4 @@ if st.button("Submit", key="submit_button"):
         st.write("Your feedback has been submitted successfully.")
     else:
         st.warning("Please enter your feedback before submitting.")
-
-
-
-
-
-
-
-
-
-
-
-# Define your CSS code as a string
-custom_css = """
-<style>
-    /* Add your CSS styles here */
-    body {
-        background-color: #3366cc;
-        background-image: url('https://example.com/ai-background-image.jpg'); /* Replace with your AI background image URL */
-        background-repeat: no-repeat;
-        background-size: cover;
-        font-family: Arial, sans-serif;
-    }
-    
-    h1 {
-        color: #ffffff;
-        font-size: 24px;
-    }
-    
-    .question {
-        color: #ffffff;
-        font-size: 18px;
-        margin-bottom: 10px;
-    }
-    
-    .options {
-        display: flex;
-        flex-direction: column;
-    }
-    
-    .option {
-        margin-bottom: 5px;
-    }
-    
-    .recommendation {
-        color: #ffffff;
-        font-size: 16px;
-        font-style: italic;
-        margin-top: 10px;
-    }
-    
-    .button {
-        margin-top: 20px;
-    }
-</style>
-"""
-
-# Render the CSS code using the `st.markdown` function
-st.markdown(custom_css, unsafe_allow_html=True)
-
-
-
-
-
-
-
 
